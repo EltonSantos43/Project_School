@@ -18,6 +18,11 @@ class AvaliacoesApiView(generics.ListCreateAPIView):
     queryset = Avaliacao.objects.all()
     serializer_class = AvaliacaoSerializer
 
+    def get_queryset(self):
+        if self.kwargs.get('curso_pk'):
+            return self.queryset.filter(curso_id=self.kwargs.get('curso_pk'))
+        return self.queryset.all()
+
 
 class AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Avaliacao.objects.all()
